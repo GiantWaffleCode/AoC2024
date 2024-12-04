@@ -76,54 +76,29 @@ Console.WriteLine($"Part 1: {PartOne()}");
 int PartTwo()
 {
     var total = 0;
-    for (int y = 0; y < readText.Length; y++)
+    for (int y = 1; y < readText.Length - 1; y++)
     {
-        for (int x = 0; x < readText[y].Length; x++)
+        for (int x = 1; x < readText[y].Length - 1; x++)
         {
             if (readText[y][x] == 'A')
             {
                 total += WordSearch(readText, x, y);
             }
         }
+    }
 
-        int WordSearch(string[] words, int x, int y)
-        {
-            var count = 0;
-            char topLeftChar;
-            char topRightChar;
-            char bottomLeftChar;
-            char bottomRightChar;
-            
-            // Check Dia Up Right
-            if (y >= 1 && x + 1 < words[y].Length)
-            {
-                topRightChar = words[y-1][x + 1];
-                if (topRightChar == 'S' || topRightChar == 'M')
-                {
-                    if (y < words.Length - 1 && x - 1 >= 0)
-                    {
-                        bottomLeftChar = words[y + 1][x - 1];
-                        if (topRightChar == 'S' && bottomLeftChar == 'M') { count++; }
-                        if (topRightChar == 'M' && bottomLeftChar == 'S') { count++; }
-                    }
-                }
-            }
-            // Check Dia Down Right
-            if (y < words.Length - 1 && x + 1 < words[y].Length)
-            {
-                bottomRightChar = words[y+1][x + 1];
-                if (bottomRightChar == 'S' || bottomRightChar == 'M')
-                {
-                    if (y >= 1 && x - 1 >= 0)
-                    {
-                        topLeftChar = words[y - 1][x - 1];
-                        if (topLeftChar == 'S' && bottomRightChar == 'M') { count++; }
-                        if (topLeftChar == 'M' && bottomRightChar == 'S') { count++; }
-                    }
-                }
-            }
-            return count == 2 ? 1 : 0;
-        }
+    int WordSearch(string[] words, int x, int y)
+    {
+        var count = 0;
+        var topLeftChar = words[y - 1][x - 1];
+        var topRightChar = words[y - 1][x + 1];
+        var bottomLeftChar = words[y + 1][x - 1];
+        var bottomRightChar = words[y + 1][x + 1];
+
+        if ((topLeftChar, bottomRightChar) is ('M', 'S') or ('S', 'M')) count++;
+        if ((topRightChar, bottomLeftChar) is ('M', 'S') or ('S', 'M')) count++;
+
+        return count == 2 ? 1 : 0;
     }
     return total;
 }
