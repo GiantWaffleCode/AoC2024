@@ -16,56 +16,39 @@ int PartOne()
             }
         }
     }
-    
+
+    bool IsValid(string[] words, int x, int signX, int y, int signY)
+    {
+        return words[y + 1 * signY][x + 1 * signX] == 'M' &&
+               words[y + 2 * signY][x + 2 * signX] == 'A' &&
+               words[y + 3 * signY][x + 3 * signX] == 'S';
+    }
+
     int WordSearch(string[] words, int x, int y)
     {
         var count = 0;
+        var validRight = x + 3 < words[y].Length;
+        var validLeft = x - 3 >= 0;
+        var validTop = y >= 3;
+        var validBottom = y < words.Length - 3;
 
         // Check Hor Right
-        if (x + 3 < words[y].Length &&
-            words[y][x + 1] == 'M' &&
-            words[y][x + 2] == 'A' &&
-            words[y][x + 3] == 'S') { count += 1; }
+        if (validRight && IsValid(words, x, 1, y, 0)) { count += 1; }
         // Check Hor Left
-        if (x - 3 >= 0 &&
-            words[y][x - 1] == 'M' &&
-            words[y][x - 2] == 'A' &&
-            words[y][x - 3] == 'S') { count += 1; }
+        if (validLeft && IsValid(words, x, -1, y, 0)) { count += 1; }
         // Check Ver Up
-        if (y >= 3 &&
-            words[y - 1][x] == 'M' &&
-            words[y - 2][x] == 'A' &&
-            words[y - 3][x] == 'S') { count += 1; }
+        if (validTop && IsValid(words, x, 0, y, -1)) { count += 1; }
         // Check Ver Down
-        if (y < words.Length - 3 &&
-            words[y + 1][x] == 'M' &&
-            words[y + 2][x] == 'A' &&
-            words[y + 3][x] == 'S') { count += 1; }
+        if (validBottom && IsValid(words, x, 0, y, 1)) { count += 1; }
         // Check Dia Up Right
-        if (y >= 3 &&
-            x + 3 < words[y].Length &&
-            words[y - 1][x + 1] == 'M' &&
-            words[y - 2][x + 2] == 'A' &&
-            words[y - 3][x + 3] == 'S') { count += 1; }
+        if (validTop && validRight && IsValid(words, x, 1, y, -1)) { count += 1; }
         //Check Dia Up Left
-        if (y >= 3 &&
-            x - 3 >= 0 &&
-            words[y - 1][x - 1] == 'M' &&
-            words[y - 2][x - 2] == 'A' &&
-            words[y - 3][x - 3] == 'S') { count += 1; }
+        if (validTop && validLeft && IsValid(words, x, -1, y, -1)) { count += 1; }
         //Check Dia Down Right
-        if (y < words.Length - 3 &&
-            x + 3 < words[y].Length &&
-            words[y + 1][x + 1] == 'M' &&
-            words[y + 2][x + 2] == 'A' &&
-            words[y + 3][x + 3] == 'S') { count += 1; }
+        if (validBottom && validRight && IsValid(words, x, 1, y, 1)) { count += 1; }
         //Check Dia Down Left
-        if (y < words.Length - 3 &&
-            x - 3 >= 0 &&
-            words[y + 1][x - 1] == 'M' &&
-            words[y + 2][x - 2] == 'A' &&
-            words[y + 3][x - 3] == 'S') { count += 1; }
-        
+        if (validBottom && validLeft && IsValid(words, x, -1, y, 1)) { count += 1; }
+
         return count;
     }
     return total;
