@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-string path = @"C:\Repo\AoC2024\Inputs\Day06.txt";
+﻿string path = @"C:\Repo\AoC2024\Inputs\Day06.txt";
 string samplePath = @"C:\Repo\AoC2024\Inputs\Day06Sample.txt";
 
 char[][] map = File.ReadAllLines(path).Select(x => x.ToCharArray()).ToArray();
