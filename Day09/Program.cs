@@ -13,19 +13,12 @@ long PartOne()
         {
             if (i % 2 == 0) // Data
             {
-                for (int j = 0; j < input[i]; j++)
-                {
-                    result.Add(itemCount);
-                }
-
+                result.AddRange(Enumerable.Repeat(itemCount, input[i]));
                 itemCount++;
             }
             else
             {
-                for (int j = 0; j < input[i]; j++)
-                {
-                    result.Add(-1);
-                }
+                result.AddRange(Enumerable.Repeat(-1, input[i]));
             }
         }
         return result;
@@ -38,22 +31,8 @@ long PartOne()
 
         while (firstSpaceIndex <= lastItemIndex)
         {
-            for (int i = 0; i < input.Count; i++)
-            {
-                if (input[i] == -1)
-                {
-                    firstSpaceIndex = i;
-                    break;
-                }
-            }
-            for (int i = input.Count - 1; i >= 0; i--)
-            {
-                if (input[i] != -1)
-                {
-                    lastItemIndex = i;
-                    break;
-                }
-            }
+            firstSpaceIndex = input.IndexOf(-1);
+            lastItemIndex = input.FindLastIndex(id => id != -1);
 
             if (firstSpaceIndex < lastItemIndex)
             {
