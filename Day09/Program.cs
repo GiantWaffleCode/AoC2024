@@ -73,7 +73,7 @@ long PartOne()
                 total += i * input[i];
             }
         }
-
+        
         return total;
     }
     
